@@ -1,0 +1,24 @@
+<div class="categories-container">
+    <h2>Manage Categories</h2>
+  
+    <div class="add-category">
+      <input [(ngModel)]="newCategoryName" placeholder="New Category Name" />
+      <button (click)="addCategory()">Add</button>
+    </div>
+  
+    <div class="category-list">
+      <div *ngFor="let category of categories" class="category-item">
+        <div *ngIf="editingCategory?.id !== category.id">
+          <span>{{ category.name }}</span>
+          <button (click)="startEditing(category)">Edit</button>
+          <button (click)="deleteCategory(category.id)">Delete</button>
+        </div>
+        <div *ngIf="editingCategory?.id === category.id">
+          <input [(ngModel)]="editedName" />
+          <button (click)="saveCategory()">Save</button>
+          <button (click)="cancelEditing()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,24 @@
+<div class="recommendations-container">
+    <h2>Recommendations</h2>
+  
+    <div *ngIf="loading" class="loading-spinner">
+      Loading recommendations...
+    </div>
+  
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  
+    <div *ngIf="!loading && recommendations.length > 0" class="recommendations-list">
+      <div *ngFor="let rec of recommendations" class="recommendation-card">
+        <h3>{{ rec.merchant }}</h3>
+        <p><strong>Potential Savings:</strong> ${{ rec.potential_savings }}</p>
+        <p><strong>Distance:</strong> {{ rec.distance }}</p>
+      </div>
+    </div>
+  
+    <div *ngIf="!loading && recommendations.length === 0" class="no-recommendations">
+      No recommendations available yet.
+    </div>
+  </div>
+  

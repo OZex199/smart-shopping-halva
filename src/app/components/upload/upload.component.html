@@ -1,0 +1,48 @@
+<div class="upload-container">
+    <h2>Upload a Receipt</h2>
+  
+    <input type="file" (change)="onFileSelected($event)">
+    <button (click)="upload()">Upload</button>
+  
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  
+    <div *ngIf="uploadSuccess && receiptDetails" class="receipt-details">
+      <h3>Receipt Uploaded Successfully ✅</h3>
+  
+      <table class="receipt-table">
+        <tr><th>Merchant</th><td>{{ receiptDetails.merchant }}</td></tr>
+        <tr><th>Date</th><td>{{ receiptDetails.date }}</td></tr>
+        <tr><th>Subtotal</th><td>${{ receiptDetails.subtotal }}</td></tr>
+        <tr><th>Tax</th><td>${{ receiptDetails.tax }}</td></tr>
+        <tr><th>Total</th><td>${{ receiptDetails.total }}</td></tr>
+      </table>
+  
+      <h4>Purchased Items:</h4>
+      <table class="items-table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Price ($)</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of receiptDetails.items">
+            <td>{{ item.name }}</td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.category }}</td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <h4>Spending by Category:</h4>
+      <apx-chart
+        [series]="chartSeries"
+        [chart]="chartOptions"
+        [labels]="chartLabels"
+        [legend]="legend"
+        [responsive]="responsive">
+      </apx-chart>
+    </div>
+  </div>
+  

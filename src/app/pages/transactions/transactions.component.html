@@ -1,0 +1,70 @@
+<!-- transactions.component.html -->
+<div class="transactions-container">
+    <h2>Transaction History</h2>
+  
+    <div class="filters">
+      <div class="filter-group">
+        <label for="time-filter">Time Period:</label>
+        <select id="time-filter" [(ngModel)]="filter" (change)="applyFilter()">
+          <option value="all">All Time</option>
+          <option value="last7">Last 7 Days</option>
+          <option value="last30">Last 30 Days</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label for="sort-filter">Sort By:</label>
+        <select id="sort-filter" [(ngModel)]="sortBy" (change)="applySort()">
+          <option value="date-desc">Newest First</option>
+          <option value="date-asc">Oldest First</option>
+          <option value="merchant-asc">Merchant (A-Z)</option>
+          <option value="merchant-desc">Merchant (Z-A)</option>
+        </select>
+      </div>
+    </div>
+  
+    <div class="chart-section">
+      <apx-chart 
+        [series]="chartSeries"  
+        [labels]="chartLabels"
+        [colors]="chartColors">
+      </apx-chart>
+    </div>
+  
+    <div class="table-section">
+      <table>
+        <thead>
+          <tr>
+            <th>Merchant</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Receipt</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="filteredTransactions.length > 0; else noTransactions">
+            <tr *ngFor="let tx of filteredTransactions">
+              <td>{{ tx.merchant }}</td>
+              <td>{{ tx.date | date:'mediumDate' }}</td>
+              <td>{{ tx.amount | currency }}</td>
+              <td>
+                <a class="receipt-link" [href]="api.getReceiptImage(tx.receipt_image_url.split('/').pop())" target="_blank">
+                  <span class="receipt-icon">📄</span> View
+                </a>
+              </td>
+            </tr>
+          </ng-container>
+          
+          <ng-template #noTransactions>
+            <tr>
+              <td colspan="4" class="empty-state">
+                <span class="empty-icon">🧾</span>
+                <h3>No transactions found</h3>
+                <p>Try adjusting your filters or add a new transaction</p>
+              </td>
+            </tr>
+          </ng-template>
+        </tbody>
+      </table>
+    </div>
+  </div>

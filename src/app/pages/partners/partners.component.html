@@ -1,0 +1,16 @@
+<div class="partners-container">
+    <h2>Our Partners</h2>
+  
+    <div class="partner-grid">
+      <div class="partner-card" *ngFor="let partner of partners">
+        <h3>{{ partner.name }}</h3>
+        <p><strong>Category:</strong> {{ partner.category }}</p>
+        <p><strong>Discount:</strong> {{ partner.discount }}</p>
+      </div>
+    </div>
+  
+    <div *ngIf="!partners.length" class="loading-message">
+      Loading partners...
+    </div>
+  </div>
+  

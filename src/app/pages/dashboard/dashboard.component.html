@@ -1,0 +1,42 @@
+<div class="dashboard-container">
+  <h2>Dashboard Overview</h2>
+
+  <div *ngIf="analytics; else loadingBlock">
+    <div class="stats-section">
+      <div class="stat-card">
+        <h4>Potential Savings</h4>
+        <div class="amount">{{ analytics.potential_savings | currency }}</div>
+      </div>
+
+      <div class="stat-card">
+        <h4>Achieved Savings</h4>
+        <div class="amount">{{ analytics.achieved_savings | currency }}</div>
+      </div>
+    </div>
+
+    <div class="chart-container">
+      <apx-chart 
+        *ngIf="chartOptions" 
+        [series]="chartOptions.series" 
+        [chart]="chartOptions.chart" 
+        [xaxis]="chartOptions.xaxis">
+      </apx-chart>
+    </div>
+  </div>
+
+  <ng-template #loadingBlock>
+    <div class="loading-text">
+      <div class="loader"></div>
+      <p>Loading analytics...</p>
+    </div>
+  </ng-template>
+  
+
+  <div class="upload-section">
+    <app-upload></app-upload>
+  </div>
+
+  <div class="categories-section">
+    <app-categories></app-categories>
+  </div>
+</div>
